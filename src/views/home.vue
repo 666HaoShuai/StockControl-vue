@@ -5,7 +5,7 @@
             <div>
         <span style="margin-left:20px;">
           <img
-                  src="../assets/ilogo.png"
+                  src="../assets/wuchuan.png"
                   width="250px;"
                   style="margin-left:-10px;"
                   height="100%;"

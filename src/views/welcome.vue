@@ -106,7 +106,9 @@
                 <div class="grid-content bg-purple">
                     <el-card style="min-height:650px;">
                         <el-carousel height="180px">
-                            <el-carousel-item v-for="item in 3" :key="item"></el-carousel-item>
+                            <el-carousel-item v-for="item in imageList" :key="item">
+                                <img height="100%" width="100%" :src=item.src />
+                            </el-carousel-item>
                         </el-carousel>
                         <aplayer
                                 style="margin-top:20px;margin-bottom:30px;"
@@ -192,7 +194,17 @@
                     "title": "Affection",
                     "src": "http://music.163.com/song/media/outer/url?id=1393553542.mp3",
                     "pic": "http://p4.music.126.net/T_vdbfQPO4HE4zVE_8rgCQ==/109951164389023010.jpg"
-                }]
+                }],
+                imageList:[
+                    {
+                        "src": require("@/assets/image1.jpg")
+                    },
+                    {
+                        "src": require("@/assets/image2.jpg")
+                    },                    {
+                        "src": require("@/assets/image3.jpg")
+                    }
+                ]
             };
         },
         methods: {

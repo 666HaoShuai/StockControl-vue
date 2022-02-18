@@ -130,7 +130,17 @@ const routes = [
                 name: 'Health',
                 component: () => import( '../views/business/covid19/health'), //健康打卡
             },
-
+            /**********************************物资供应模块的路由******************************/
+            {
+                path: '/supply/index',
+                name: 'Gain',
+                component: () => import( '../views/supply/index'),
+            },
+            {
+                path: '/supply/salesVolume',
+                name: 'salesVolume',
+                component: () => import( '../views/supply/salesVolume'),
+            },
             {
                 path: "/error/401",
                 component: () => import( '../views/error/401'),
