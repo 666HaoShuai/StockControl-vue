@@ -19,19 +19,7 @@
               :model="queryMap"
               class="demo-form-inline"
             >
-              <el-form-item>
-                <el-cascader
-                  placeholder="请选择分类查询"
-                  :change-on-select="true"
-                  @change="selectChange"
-                  v-model="categorykeys"
-                  :props="searchSelectProps"
-                  :options="catetorys"
-                  clearable
-                ></el-cascader>
-              </el-form-item>
-
-              <el-form-item>
+              <el-form-item label="物资名称">
                 <el-input
                   clearable
                   @clear="search"
@@ -61,16 +49,32 @@
                 label="规格"
                 width="110"
               ></el-table-column>
-              <el-table-column prop="stock" label="库存"  width="80" >
+              <el-table-column prop="stock" label="库存" width="80">
                 <template slot-scope="scope">
                   <el-tag size="mini" closable>{{ scope.row.stock }}</el-tag>
                 </template>
               </el-table-column>
-              <el-table-column prop="unit" label="单位" width="80" ></el-table-column>
+              <el-table-column
+                prop="unit"
+                label="单位"
+                width="80"
+              ></el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button type="primary" size="mini" icon="el-icon-shopping-cart-2" @click="reduce(scope.row.pnum)">出库</el-button>
-                  <el-button type="primary" size="mini" icon="el-icon-shopping-cart-2" @click="add(scope.row.pnum)">入库</el-button>
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    icon="el-icon-shopping-cart-2"
+                    @click="reduce(scope.row.pnum)"
+                    >出库</el-button
+                  >
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    icon="el-icon-shopping-cart-2"
+                    @click="add(scope.row.pnum)"
+                    >入库</el-button
+                  >
                 </template>
               </el-table-column>
             </el-table>
@@ -109,15 +113,6 @@ import echarts from "echarts";
 export default {
   data() {
     return {
-      catetorys: [], //类别选择
-      searchSelectProps: {
-        expandTrigger: "hover",
-        value: "id",
-        label: "name",
-        children: "children",
-        checkStrictly: true,
-      }, //级联搜索选择器配置项
-      categorykeys: [],
       total: 0,
       tableData: [],
       queryMap: { pageSize: 9, pageNum: 1 },
@@ -261,7 +256,6 @@ export default {
       var option = {
         title: {
           text: "库存占比图",
-
           left: "left",
         },
         toolbox: {
@@ -331,48 +325,24 @@ export default {
       }
     },
     /**
-     * 分类搜索改变时
-     */
-    selectChange() {
-      var str = "";
-      for (var i = 0; i < this.categorykeys.length; i++) {
-        str += this.categorykeys[i] + ",";
-      }
-      str = str.substring(0, str.length - 1);
-      this.queryMap.categorys = str;
-    },
-    /**
-     * 加载物资类别
-     */
-    async getCatetorys() {
-      const { data: res } = await this.$http.get(
-        "business/productCategory/categoryTree"
-      );
-      if (!res.success) {
-        return this.$message.error("获取物资类别失败:" + res.data.errorMsg);
-      } else {
-        this.catetorys = res.data.rows;
-      }
-    },
-    /**
      * 商品出库
      */
     reduce(pNum) {
-      const { data: res } =  this.$http.get("/business/userProduct/reduce/"+pNum);
-      this.search()
+      const { data: res } = this.$http.get(
+        "/business/userProduct/reduce/" + pNum
+      );
+      this.search();
     },
     /**
      * 商品入库
      */
     add(pNum) {
-      const { data: res } =  this.$http.get("/business/userProduct/add/"+pNum);
-      this.search()
-    }
+      const { data: res } = this.$http.get("/business/userProduct/add/" + pNum);
+      this.search();
+    },
   },
   created() {
     this.getStockList();
-    this.getCatetorys();
-    this.findAllProductStocks();
   },
   mounted: function () {
     this.draw();

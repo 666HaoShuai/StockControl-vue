@@ -1,62 +1,72 @@
 <template>
-    <div id="login">
-        <h1 style="position: absolute;color: #fff;left: 50%;transform: translateX(-50%); top: -110px;">新冠-物资管理系统</h1>
-        <el-form
-                :model="userLoginForm"
-                :rules="loginRules"
-                status-icon
-                ref="userLoginFormRef"
-                label-position="left"
-                label-width="0px"
-                class="demo-ruleForm login-page"
-        >
-            <h3 class="title">系统登录</h3>
-            <el-form-item prop="username">
-                <el-input
-                        type="text"
-                        @keyup.enter.native="handleSubmit"
-                        v-model="userLoginForm.username"
-                        auto-complete="off"
-                        placeholder="用户名"
-                        prefix-icon="iconfont el-icon-user"
-                ></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-                <el-input
-                        @keyup.enter.native="handleSubmit"
-                        type="password"
-                        v-model="userLoginForm.password"
-                        auto-complete="off"
-                        placeholder="密码"
-                        prefix-icon="el-icon-suitcase-1"
-                ></el-input>
-            </el-form-item>
-            <div></div>
+  <div id="login">
+    <h1
+      style="
+        position: absolute;
+        color: #fff;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -110px;
+      "
+    >
+      新冠-物资管理系统
+    </h1>
+    <el-form
+      :model="userLoginForm"
+      :rules="loginRules"
+      status-icon
+      ref="userLoginFormRef"
+      label-position="left"
+      label-width="0px"
+      class="demo-ruleForm login-page"
+    >
+      <h3 class="title">系统登录</h3>
+      <el-form-item prop="username">
+        <el-input
+          type="text"
+          @keyup.enter.native="handleSubmit"
+          v-model="userLoginForm.username"
+          auto-complete="off"
+          placeholder="用户名"
+          prefix-icon="iconfont el-icon-user"
+        ></el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input
+          @keyup.enter.native="handleSubmit"
+          type="password"
+          v-model="userLoginForm.password"
+          auto-complete="off"
+          placeholder="密码"
+          prefix-icon="el-icon-suitcase-1"
+        ></el-input>
+      </el-form-item>
+      <div></div>
 
-            <el-checkbox v-model="checked" class="rememberme">记住密码</el-checkbox>
-            <el-form-item style="width:100%;">
-                <div style="float:right;">
-                    <el-button
-                            type="primary"
-                            class="el-icon-mobile-phone"
-                            @click="handleSubmit"
-                            :loading="loading"
-                    >登录
-                    </el-button>
-                    <el-button class="el-icon-refresh" @click="resetForm">重置</el-button>
-                </div>
-            </el-form-item>
-        </el-form>
+      <el-checkbox v-model="checked" class="rememberme">记住密码</el-checkbox>
+      <el-form-item style="width: 100%">
+        <div style="float: right">
+          <el-button
+            type="primary"
+            class="el-icon-mobile-phone"
+            @click="handleSubmit"
+            :loading="loading"
+            >登录
+          </el-button>
+          <el-button class="el-icon-refresh" @click="resetForm">重置</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
 
-        <!-- 验证码 -->
-        <Vcode
-                :show="isShow"
-                @success="success"
-                @close="close"
-                :canvasWidth="500"
-                :canvasHeight="350"
-        />
-    </div>
+    <!-- 验证码 -->
+    <Vcode
+      :show="isShow"
+      @success="success"
+      @close="close"
+      :canvasWidth="500"
+      :canvasHeight="350"
+    />
+  </div>
 </template>
 
 <script>
@@ -142,7 +152,7 @@
                 } else {
                     this.userInfo = res.data;
                     this.$store.commit("setUserInfo", res.data);
-                    await this.$router.push("/home");
+                    await this.$router.push(res.data.username==='张凯宇'?"/supply/index":"/home")
                 }
             },
 
@@ -156,33 +166,30 @@
 </script>
 
 <style scoped>
-    .login-container {
-        width: 100%;
-        height: 100%;
+.login-container {
+  width: 100%;
+  height: 100%;
+}
 
-    }
+#login {
+  position: relative;
+}
 
-    #login {
-        position: relative;
-    }
+.login-page {
+  position: relative;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin: 190px auto;
+  width: 370px;
+  padding: 40px 35px 15px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+}
 
-
-    .login-page {
-        position: relative;
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-        margin: 190px auto;
-        width: 370px;
-        padding: 40px 35px 15px;
-        background: #fff;
-        border: 1px solid #eaeaea;
-    }
-
-    label.el-checkbox.rememberme {
-        margin: 0px 0px 15px;
-        text-align: left;
-    }
-
+label.el-checkbox.rememberme {
+  margin: 0px 0px 15px;
+  text-align: left;
+}
 </style>
 
 
